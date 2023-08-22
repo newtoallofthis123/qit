@@ -29,24 +29,12 @@ fn main() {
     let wanna_commit = wanna_commit.with_help_message("Enter y or n");
     if wanna_commit.prompt().unwrap() == "y"{
         if args.branch.is_some(){
-            // first check if the branch exists
+            // first check out to the branch
             let branch = args.branch.unwrap();
-            let mut git_branch = std::process::Command::new("git");
-            git_branch.arg("branch").arg("-a");
-            let output = git_branch.output().expect("Failed to get branches");
-            let output = String::from_utf8(output.stdout).unwrap();
-            let branches: Vec<&str> = output.split("\n").collect();
-            let mut branch_exists = false;
-            for b in branches{
-                if b.trim() == branch{
-                    branch_exists = true;
-                    break;
-                }
-            }
-            if !branch_exists{
-                bunt::println!("{$red}Branch does not exist{/$}");
-                std::process::exit(1);
-            }
+            let mut git_checkout = std::process::Command::new("git");
+            git_checkout.arg("checkout").arg(branch.clone());
+            git_checkout.output().expect("Failed to checkout");
+            // now push to the branch
             let mut git_push = std::process::Command::new("git");
             git_push.arg("push").arg("origin").arg(branch);
             git_push.output().expect("Failed to push");
