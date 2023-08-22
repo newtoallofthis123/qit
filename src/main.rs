@@ -17,6 +17,19 @@ fn main() {
     bunt::println!("Quick Git doing it's {$underline}thing{/$} 😉...");
     bunt::println!("Parsing {$blue}Arguments{/$}...");
     let commit_msg = args.commit;
+    bunt::println!("{$green}Parsed Arguments{/$}");
+    if commit_msg == ""{
+        bunt::println!("{$red}Commit message cannot be empty{/$}");
+        std::process::exit(1);
+    }
+    if commit_msg == "undo"{
+        let mut git_undo = std::process::Command::new("git");
+        git_undo.arg("reset").arg("HEAD~1");
+        git_undo.output().expect("Failed to undo");
+        bunt::println!("{$green}Undid the commit{/$}");
+        std::process::exit(0);
+    }
+    bunt::println!("{$blue}Committing{/$}...");
     //run the git commands
     let mut git_add = std::process::Command::new("git");
     git_add.arg("add").arg(".");
