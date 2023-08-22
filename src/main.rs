@@ -6,7 +6,10 @@ use clap::Parser;
 //? The Args struct is used to parse the command line arguments
 struct Args {
     #[arg(required=true, help="The commit message")]
-    commit: String
+    commit: String,
+
+    #[arg(short, long, help="The Branch to commit to")]
+    branch: Option<String>
 }
 
 fn main() {
@@ -25,9 +28,34 @@ fn main() {
     let wanna_commit = inquire::Text::new("Do you want to push to remote?");
     let wanna_commit = wanna_commit.with_help_message("Enter y or n");
     if wanna_commit.prompt().unwrap() == "y"{
-        let mut git_push = std::process::Command::new("git");
-        git_push.arg("push");
-        git_push.output().expect("Failed to push");
+        if args.branch.is_some(){
+            // first check if the branch exists
+            let branch = args.branch.unwrap();
+            let mut git_branch = std::process::Command::new("git");
+            git_branch.arg("branch").arg("-a");
+            let output = git_branch.output().expect("Failed to get branches");
+            let output = String::from_utf8(output.stdout).unwrap();
+            let branches: Vec<&str> = output.split("\n").collect();
+            let mut branch_exists = false;
+            for b in branches{
+                if b.trim() == branch{
+                    branch_exists = true;
+                    break;
+                }
+            }
+            if !branch_exists{
+                bunt::println!("{$red}Branch does not exist{/$}");
+                std::process::exit(1);
+            }
+            let mut git_push = std::process::Command::new("git");
+            git_push.arg("push").arg("origin").arg(branch);
+            git_push.output().expect("Failed to push");
+        }
+        else{
+            let mut git_push = std::process::Command::new("git");
+            git_push.arg("push");
+            git_push.output().expect("Failed to push");
+        }
         bunt::println!("{$green}Pushed to remote{/$}");
     }
     else{
