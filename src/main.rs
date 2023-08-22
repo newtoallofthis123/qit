@@ -6,16 +6,13 @@ use clap::Parser;
 //? The Args struct is used to parse the command line arguments
 struct Args {
     #[arg(required=true, help="The commit message")]
-    commit: String,
-
-    #[arg(short, long)]
-    docs: bool,
+    commit: String
 }
 
 fn main() {
+    let args = Args::parse();
     bunt::println!("Quick Git doing it's {$underline}thing{/$} 😉...");
     bunt::println!("Parsing {$blue}Arguments{/$}...");
-    let args = Args::parse();
     let commit_msg = args.commit;
     //run the git commands
     let mut git_add = std::process::Command::new("git");
