@@ -40,7 +40,7 @@ fn main() {
         let wanna_undo = wanna_undo.with_help_message("Enter y or n");
         if wanna_undo.prompt().unwrap() == "y"{
             let mut git_undo = std::process::Command::new("git");
-            git_undo.arg("reset").arg("HEAD~1");
+            git_undo.arg("reset").arg("HEAD~1").arg("--hard");
             git_undo.output().expect("Failed to undo");
             bunt::println!("{$green}Undid the commit{/$}");
         }
