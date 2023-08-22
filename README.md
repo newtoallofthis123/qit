@@ -17,12 +17,7 @@ Other than that, it is a simple CLI written in rust.
 
 ## Installation
 
-Installing it on your system is very easy, just run the following command in your terminal.
-
-```bash
-curl -o "qit.exe" https://www.noobscience.rocks/go/tqV0YZ
-```
-That's it, you are done. Now you can run `qit` in your terminal to use it. I recommend adding it to your path so that you can use it from anywhere.
+Installing it on your system is very easy, just download the executable from the [releases](/releases) page and put it in your `/usr/local/bin` directory.
 
 ### Local Installation
 
