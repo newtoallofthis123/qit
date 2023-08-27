@@ -8,7 +8,7 @@ struct Args {
     #[arg(required=false, help="Any Basic Git Command")]
     cmd: Option<String>,
 
-    #[arg(required=false, help="Any Sub command")]
+    #[arg(required=false, help="Any Sub command", default_value="?")]
     sub: Option<String>,
 
     #[arg(required=false, short, long, help="Opens the git repository in your default browser")]
