@@ -82,6 +82,7 @@ pub fn is_tree_clean() -> bool {
         .output()
         .expect("failed to execute process");
     let output_str = String::from_utf8_lossy(&output.stdout).to_string();
+    println!("{}", output_str);
     if output_str.contains("nothing to commit, working tree clean"){
         return true;
     }
