@@ -38,7 +38,7 @@ fn main() {
     git_commit.arg("commit").arg("-m").arg(commit_msg.clone());
     git_commit.output().expect("Failed to commit");
     bunt::println!("Commited to Git with message: {$green}{}{/$}", commit_msg.clone());
-    let wanna_commit = inquire::Confirm::new("Do you want to push to remote?");
+    let wanna_commit = inquire::Confirm::new("Do you want to push to remote?").with_default(true);
     if wanna_commit.prompt().unwrap(){
         if args.branch.is_some(){
             // first check out to the branch
