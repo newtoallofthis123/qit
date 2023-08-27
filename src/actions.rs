@@ -27,6 +27,18 @@ pub fn get_all_files() -> Vec<String> {
     output_vec[..output_vec.len()-1].to_vec()
 }
 
+pub fn get_modifiled_files() -> Vec<String> {
+    let output = Command::new("git")
+        .arg("ls-files")
+        .arg("--modified")
+        .output()
+        .expect("failed to execute process");
+    let output_str = String::from_utf8_lossy(&output.stdout).to_string();
+    let output_vec: Vec<String> = output_str.split("\n").map(|s| s.to_string()).collect();
+    output_vec[..output_vec.len()-1].to_vec()
+}
+
+
 pub fn git_commit(msg: &str)-> String {
     let output = Command::new("git")
         .arg("commit")
@@ -82,7 +94,6 @@ pub fn is_tree_clean() -> bool {
         .output()
         .expect("failed to execute process");
     let output_str = String::from_utf8_lossy(&output.stdout).to_string();
-    println!("{}", output_str);
     if output_str.contains("nothing to commit, working tree clean"){
         return true;
     }
