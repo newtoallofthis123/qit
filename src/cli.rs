@@ -1,4 +1,4 @@
-pub fn show_options(options: Vec<String>) -> String {
+pub fn _show_options(options: Vec<String>) -> String {
     let result = inquire::Select::new("Select an option", options).with_page_size(10).prompt().unwrap();
     result
 }

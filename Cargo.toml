@@ -11,3 +11,4 @@ clap = {version="*", features=["derive"]}
 human-panic = {version="*"}
 bunt = {version="*"}
 webbrowser = {version="*"}
+reqwest = {version="*"}

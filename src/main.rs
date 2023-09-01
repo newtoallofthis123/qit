@@ -9,15 +9,13 @@ struct Args {
     cmd: Option<String>,
 
     #[arg(required=false, help="Any Sub command", default_value="?")]
-    sub: Option<String>,
-
-    #[arg(required=false, short, long, help="Opens the git repository in your default browser")]
-    open: bool,
+    sub: Option<String>
 }
 
 mod handler;
 mod actions;
 mod cli;
+mod license;
 
 fn main() {
     bunt::println!("{$blue}   ____    _ __ {/$}");
@@ -26,50 +24,25 @@ fn main() {
     bunt::println!("{$yellow}/ /_/ / / / /_  {/$}");
     bunt::println!("{$blue}\\___\\_\\/_/\\__/ {/$}{$green}v.1{/$} {$underline}{$bold}Simple Git{/$}{/$} for Beginners\n");
     let args = Args::parse();
-    if args.open {
-        bunt::println!("Opening the git repository in your {$blue}default browser{/$}...");
-        actions::get_default_git_remote();
-        return;
-    }
     let cmd:String;
     if args.cmd.is_none() {
-        cmd = cli::show_options(vec!["add".to_string(), "commit".to_string(), "push".to_string(), "checkout".to_string(), "help".to_string()]);
+        cmd = inquire::Text::new("Enter a command or commit message").prompt().unwrap();
     }
     else {
         cmd = args.cmd.unwrap();
     }
-
     match cmd.as_str() {
-        "add" => {
-            let file = args.sub.unwrap();
-            handler::add(&file);
+        "open" => {
+            bunt::println!("Opening the git repository in your {$blue}default browser{/$}...");
+            actions::get_default_git_remote();    
         }
-        "commit" => {
-            let msg:String;
-            if args.sub.is_none() {
-                msg = inquire::Text::new("Enter Commit Message").prompt().unwrap();
-            }
-            else {
-                msg = args.sub.unwrap();
-            }
-            handler::commit(&msg);
-        }
-        "push" => {
-            handler::push();
-        }
-        "checkout" => {
-            handler::checkout(&args.sub.unwrap());
-        }
-        "help" => {
-            bunt::println!("Git {$yellow}Help{/$}");
-            bunt::println!("{$underline}Qit{/$} is a simple git wrapper for beginners, use --open to open the git repository in your default browser");
-            bunt::println!("{$green}add{/$} - Adds a file to the staging area");
-            bunt::println!("{$yellow}commit{/$} - Commits the staged files");
-            bunt::println!("{$blue}push{/$} - Pushes the commited files to the remote repository");
-            bunt::println!("{$red}checkout{/$} - Switches to a different branch");
+        "init" => {
+            
         }
         _ => {
-            bunt::println!("Invalid Command");
+            bunt::println!("No Command Detected, proceeding to {$yellow}commit{/$} message")
         }
     }
+
+
 }
