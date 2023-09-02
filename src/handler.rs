@@ -122,7 +122,7 @@ pub fn handle_normal(commit_msg: &str){
         .arg(&commit_msg)
         .output()
         .expect("failed to execute process");
-    bunt::println!("{$green}Commit{/$} Successful");
+    bunt::println!("{$green}Commited{/$} with message {$yellow}{}{/$}", commit_msg);
     let res = crate::cli::get_conformation("Do you want to push the changes?");
     if !res {
         bunt::println!("{$red}Push{/$} Aborted");
