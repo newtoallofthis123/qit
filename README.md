@@ -1,93 +1,73 @@
-# Qit
+# Quick Git (Qit)
 
-Qit is a simple and easy to use command line wrapper for git. It is aimed at beginners who want to use git, but sometimes mess up the commands. Qit is a wrapper around git, so you can use all the git commands you already know.
+Qit is a simple CLI tool written in rust that tries to make the git experience a little bit easier. It is _not_ a replacement for git, but rather a wrapper around it. It is meant to be used in conjunction with git, not instead of it.
+
+Qit has a few simple commands that make it easier to do some common git tasks. Like for example, `qit init` will create a git repository and automatically prompt you for some details and create a README.md file, a license file, and a .gitignore file. It will also give you the option to create a remote repository on GitHub and push your local repository to it.
 
 ## Installation
 
-With the following command you can install qit:
+### From Source
+
+To install from source, you will need to have [Rust](https://www.rust-lang.org/) installed. Once you have that, you can clone this repository and run `cargo install --path .` from the root of the repository.
 
 ```bash
-git clone https://github.com/newtoallofthis123/qit
+git clone https://github.com/newtoallofthis123/qit.git
 cd qit
-cargo build --release
+cargo install --path .
 ```
 
-I am currently working on publishing it to crates.io, so you can install it with cargo, however, till then, the "recommended" way to install it is to clone the repository and build it yourself.
-It is quite a small binary, so it should not take too long to build.
+### From Binary
 
-### Windows
+To install from a binary, you can download the latest release from the [releases page](/releases). Once you have downloaded the binary, you can run `chmod +x qit` to make it executable, and then move it to a directory in your PATH.
 
-I primarily work on a windows machine, so I can guarantee that it works on windows. However, I have not tested it on linux or mac, so I cannot guarantee that it works on those platforms.
-
-You can also get the windows binary from the [releases](/releases) page.
-
-## Why qit?
-
-Well, I initially made this for myself, because I sometimes mess up the git commands, and I wanted to make it easier for myself. 
-
-Qit solves this problem intuitively by exposing only the most used git commands, and hiding the rest. This makes it easier for beginners to use git, without having to remember all the commands.
-
-All the possible places you might mess up, like not adding a commit message, or commiting with unstaged changes, are handled by qit, so you don't have to worry about them.
-
-Moreover, it provides selection menus for all the commands, so you don't have to remember the commands, and can just select the option you want.
+```bash
+chmod +x qit
+sudo mv qit /usr/local/bin
+```
 
 ## Usage
 
-Qit is a wrapper around git, so you can use all the git commands you already know. However, qit also provides some additional commands, which are not available in git.
+I am always working on new commands for `qit`, mostly since I use it a lot myself. If you have any ideas for new commands, feel free to open an issue or a pull request. This README might be a little out of date, so you can always run `qit help` to see the latest commands.
 
-### Commands
+### `qit init`
 
-> ❗ - Not implemented yet
+Qit init is a wrapper around `git init`. It will create a git repository in the current directory, and then prompt you for some details. It will ask you for a project name, a project description, a license, and a .gitignore template. It will then create a README.md file, a license file, and a .gitignore file. It will also give you the option to add a remote repository.
 
-#### `qit init`
+### `qit open`
 
-Initializes a new git repository in the current directory with the following files:
+Qit opens up the current repository in your default browser. It will open the repository on GitHub, GitLab, or BitBucket, depending on which one you have configured with the git remote.
 
-- `.gitignore`
-- `README.md`
-- `LICENSE`
-- `commit.sh`
+### `qit purge`
 
-#### `qit add`
+Qit purge is not a command I use very often, but it can be useful if you want to delete all of your commits and start over. It will delete the .git directory, and then reinitialize the repository.
 
-Adds the specified files to the staging area. If no files are specified, it adds all the files to the staging area.
+### `qit "commit message"`
 
-#### `qit commit`
+Qit commit is a wrapper around the following commands:
 
-Commits the staged changes. If there are no staged changes, it will ask you to stage the changes first.
+```bash
+git add .
+git commit -m "commit message"
+git push
+```
 
-#### `qit push`
+This is the _core_ of qit. It is the command I use the most. It will add all of the files in the current directory, commit them with the message you provide, and then push them to the remote repository.
+Don't worry if you accidentally use it, it will ask you to confirm before it pushes.
 
-Pushes the changes to the remote repository. If there are no changes to push, it will ask you to commit the changes first.
+### `qit help`
 
-#### ❗`qit pull`
-
-Pulls the changes from the remote repository. If there are any local changes, it will ask you to commit them first.
-
-#### ❗`qit status`
-
-Shows the status of the repository.
-
-#### ❗`qit log`
-
-Shows the commit log.
-
-#### `qit branch` || `qit checkout`
-
-Shows the current branch and also allows you to switch branches.
-
-#### ❗`qit merge`
-
-Merges the specified branch into the current branch.
-
-#### ❗`qit clone`
-
-Clones the specified repository.
+Qit help will print out a list of all of the commands, and a short description of what they do.
 
 ## Contributing
 
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+If you have any ideas for new commands, feel free to open an issue or a pull request. I am always looking for new ideas. If you find a bug, please open an issue. If you have any questions, you can email me at [noobscience@duck.com](mailto:<noobscience@duck.com>)
 
 ## License
 
-Qit is licensed under the [MIT License](/LICENSE).
+Qit is licensed under the [MIT License](/LICENSE)
+
+## Acknowledgements
+
+- [Git](https://git-scm.com/)
+- [GitHub](https://github.com)
+- [nexxeln/license-generator](<https://github.com/nexxeln/license-generator>)
