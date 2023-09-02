@@ -27,6 +27,6 @@ pub fn get_current_branch() -> String {
         .arg("--show-current")
         .output()
         .expect("failed to execute process");
-    let output_str = String::from_utf8_lossy(&output.stdout).to_string();
+    let output_str = String::from_utf8_lossy(&output.stdout).to_string().trim().to_string();
     output_str
 }
