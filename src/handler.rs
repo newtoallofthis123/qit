@@ -133,5 +133,5 @@ pub fn handle_normal(commit_msg: &str){
         .arg("origin")
         .output()
         .expect("failed to execute process");
-    bunt::println!("{$green}Commit{/$} Successful");
+    bunt::println!("{$green}Push{/$} Successful");
 }
