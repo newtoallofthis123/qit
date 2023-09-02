@@ -125,8 +125,7 @@ pub fn handle_normal(commit_msg: &str){
     Command::new("git")
         .arg("push")
         .arg("origin")
-        .arg(crate::actions::get_current_branch())
         .output()
         .expect("failed to execute process");
-    bunt::println!("{$green}✔{/$} {$yellow}Commit{/$} Successful");
+    bunt::println!("{$green}Commit{/$} Successful");
 }
